@@ -49,9 +49,10 @@ namespace boost{ namespace multiprecision{
 namespace default_ops{
 
 #ifdef BOOST_MSVC
-// warning C4127: conditional expression is constant
 #pragma warning(push)
-#pragma warning(disable:4127)
+#pragma warning(disable:4127) // conditional expression is constant
+#pragma warning(disable:4305) // 'return': truncation from 'int' to 'short'
+#pragma warning(disable:4309) // 'return': truncation of constant value
 #endif
 //
 // Default versions of mixed arithmetic, these just construct a temporary
@@ -795,15 +796,17 @@ inline void eval_decrement(T& val)
 template <class T, class V>
 inline void eval_left_shift(T& result, const T& arg, const V val)
 {
+   typedef typename mpl::front<typename T::unsigned_types>::type ui_type;
    result = arg;
-   eval_left_shift(result, val);
+   eval_left_shift(result, static_cast<ui_type>(val));
 }
 
 template <class T, class V>
 inline void eval_right_shift(T& result, const T& arg, const V val)
 {
+   typedef typename mpl::front<typename T::unsigned_types>::type ui_type;
    result = arg;
-   eval_right_shift(result, val);
+   eval_right_shift(result, static_cast<ui_type>(val));
 }
 
 template <class T>
