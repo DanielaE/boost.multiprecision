@@ -18,6 +18,12 @@
 #include <boost/type_traits/is_unsigned.hpp>
 #include <boost/multiprecision/number.hpp>
 
+#ifdef BOOST_MSVC
+#pragma warning(disable:4127) // conditional expression is constant
+#pragma warning(disable:4293) // shift count negative or too big, undefined behavior
+#pragma warning(disable:4723) // potential divide by 0
+#endif
+
 namespace detail{
 
 template <class T>
