@@ -53,6 +53,8 @@ namespace default_ops{
 // warning C4146: unary minus operator applied to unsigned type, result still unsigned
 #pragma warning(push)
 #pragma warning(disable:4127 4146)
+#pragma warning(disable:4305) // 'return': truncation from 'int' to 'short'
+#pragma warning(disable:4309) // 'return': truncation of constant value
 #endif
 //
 // Default versions of mixed arithmetic, these just construct a temporary

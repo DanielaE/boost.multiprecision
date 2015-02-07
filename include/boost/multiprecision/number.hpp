@@ -31,8 +31,9 @@ namespace boost{ namespace multiprecision{
 #ifdef BOOST_MSVC
 // warning C4127: conditional expression is constant
 // warning C4714: function marked as __forceinline not inlined
+// warning C4503: decorated name length exceeded, name was truncated
 #pragma warning(push)
-#pragma warning(disable:4127 4714 6326)
+#pragma warning(disable:4127 4714 4503 6326)
 #endif
 
 template <class Backend, expression_template_option ExpressionTemplates>

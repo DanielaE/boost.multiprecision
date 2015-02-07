@@ -51,7 +51,7 @@ void print_factorials()
    }
    //
    // Lets see how many digits the largest factorial was:
-   unsigned digits = results.back().str().size();
+   std::size_t digits = results.back().str().size();
    //
    // Now print them out, using right justification, while we're at it
    // we'll indicate the limit of each integer type, so begin by defining
