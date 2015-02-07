@@ -46,7 +46,7 @@ void test()
 {
    boost::timer tim;
 
-   while(true)
+   for(;;)
    {
       T val = generate_random<T>(boost::math::tools::digits<T>());
       int test_id = 0;

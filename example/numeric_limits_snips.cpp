@@ -33,6 +33,10 @@
 #include <boost/test/unit_test.hpp> // Boost.Test
 #include <boost/test/floating_point_comparison.hpp> 
 
+#ifdef _MSC_VER
+# pragma warning(disable: 4309 4189 4553)
+#endif
+
 static long double const log10Two = 0.30102999566398119521373889472449L; // log10(2.)
 
 template <typename T>
