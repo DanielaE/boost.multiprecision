@@ -50,7 +50,7 @@ void do_serialize(Archive& ar, Int& val, mpl::false_ const&, mpl::false_ const&,
    std::size_t byte_count;
    ar & byte_count;
    limb_count = byte_count / sizeof(limb_type) + (byte_count % sizeof(limb_type) ? 1 : 0);
-   val.resize(limb_count, limb_count);
+   val.resize(static_cast<unsigned>(limb_count), static_cast<unsigned>(limb_count));
    limb_type* pl = val.limbs();
    for(std::size_t i = 0; i < limb_count; ++i)
    {
@@ -139,7 +139,7 @@ void do_serialize(Archive& ar, Int& val, mpl::false_ const&, mpl::false_ const&,
    std::size_t c;
    ar & s;
    ar & c;
-   val.resize(c, c);
+   val.resize(static_cast<unsigned>(c), static_cast<unsigned>(c));
    ar.load_binary(val.limbs(), c * sizeof(limb_type));
    if(s != val.sign())
       val.negate();
