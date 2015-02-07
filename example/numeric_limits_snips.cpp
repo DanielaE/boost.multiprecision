@@ -34,7 +34,11 @@
 #include <boost/test/unit_test.hpp> // Boost.Test
 #include <boost/test/floating_point_comparison.hpp>
 
-int test_main(int argc, char**const argv)
+#ifdef _MSC_VER
+# pragma warning(disable: 4309 4189 4553)
+#endif
+
+int test_main(int, char**const)
 {
   try
   {

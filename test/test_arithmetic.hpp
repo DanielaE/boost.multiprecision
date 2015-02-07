@@ -812,14 +812,14 @@ void test_float_ops(const boost::mpl::int_<boost::multiprecision::number_kind_fl
       Real v(512);
       int exponent;
       Real r;
-      exponent = ilogb(v);
+      exponent = static_cast<int>(ilogb(v));
       r = scalbn(v, -exponent);
       BOOST_CHECK(r >= 1);
       BOOST_CHECK(r < std::numeric_limits<Real>::radix);
       BOOST_CHECK_EQUAL(exponent, logb(v));
       BOOST_CHECK_EQUAL(v, scalbn(r, exponent));
       v = 1 / v;
-      exponent = ilogb(v);
+      exponent = static_cast<int>(ilogb(v));
       r = scalbn(v, -exponent);
       BOOST_CHECK(r >= 1);
       BOOST_CHECK(r < std::numeric_limits<Real>::radix);
