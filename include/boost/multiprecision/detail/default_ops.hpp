@@ -780,15 +780,17 @@ inline void eval_decrement(T& val)
 template <class T, class V>
 inline void eval_left_shift(T& result, const T& arg, const V val)
 {
+   typedef typename mpl::front<typename T::unsigned_types>::type ui_type;
    result = arg;
-   eval_left_shift(result, val);
+   eval_left_shift(result, static_cast<ui_type>(val));
 }
 
 template <class T, class V>
 inline void eval_right_shift(T& result, const T& arg, const V val)
 {
+   typedef typename mpl::front<typename T::unsigned_types>::type ui_type;
    result = arg;
-   eval_right_shift(result, val);
+   eval_right_shift(result, static_cast<ui_type>(val));
 }
 
 template <class T>
