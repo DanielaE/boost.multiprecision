@@ -878,14 +878,14 @@ void format_float_string(S& str, boost::intmax_t my_exp, boost::intmax_t digits,
       if(showpoint || (str.size() > 1))
          str.insert(static_cast<std::string::size_type>(1u), 1, '.');
       str.append(static_cast<std::string::size_type>(1u), 'e');
-      S e = boost::lexical_cast<S>(abs(my_exp));
-      if(e.size() < BOOST_MP_MIN_EXPONENT_DIGITS)
-         e.insert(static_cast<std::string::size_type>(0), BOOST_MP_MIN_EXPONENT_DIGITS - e.size(), '0');
+      S ex = boost::lexical_cast<S>(abs(my_exp));
+      if(ex.size() < BOOST_MP_MIN_EXPONENT_DIGITS)
+         ex.insert(static_cast<std::string::size_type>(0), BOOST_MP_MIN_EXPONENT_DIGITS - ex.size(), '0');
       if(my_exp < 0)
-         e.insert(static_cast<std::string::size_type>(0), 1, '-');
+         ex.insert(static_cast<std::string::size_type>(0), 1, '-');
       else
-         e.insert(static_cast<std::string::size_type>(0), 1, '+');
-      str.append(e);
+         ex.insert(static_cast<std::string::size_type>(0), 1, '+');
+      str.append(ex);
    }
    if(neg)
       str.insert(static_cast<std::string::size_type>(0), 1, '-');

@@ -2190,20 +2190,20 @@ cpp_dec_float<Digits10, ExponentType, Allocator>::cpp_dec_float(const double man
    const bool b_neg = (mantissa < 0.0);
 
    double d = ((!b_neg) ? mantissa : -mantissa);
-   ExponentType e = exponent;
+   ExponentType ex = exponent;
 
-   while(d > 10.0) { d /= 10.0; ++e; }
-   while(d < 1.0) { d *= 10.0; --e; }
+   while(d > 10.0) { d /= 10.0; ++ex; }
+   while(d < 1.0) { d *= 10.0; --ex; }
 
-   boost::int32_t shift = static_cast<boost::int32_t>(e % static_cast<boost::int32_t>(cpp_dec_float_elem_digits10));
+   boost::int32_t shift = static_cast<boost::int32_t>(ex % static_cast<boost::int32_t>(cpp_dec_float_elem_digits10));
 
    while(static_cast<boost::int32_t>(shift-- % cpp_dec_float_elem_digits10) != static_cast<boost::int32_t>(0))
    {
       d *= 10.0;
-      --e;
+      --ex;
    }
 
-   exp = e;
+   exp = ex;
    neg = b_neg;
 
    std::fill(data.begin(), data.end(), static_cast<boost::uint32_t>(0u));
@@ -2246,11 +2246,11 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
    if((boost::math::isnan)(a))
       return *this = nan();
 
-   int e;
+   int ex;
    long double f, term;
    *this = zero();
 
-   f = frexp(a, &e);
+   f = frexp(a, &ex);
    // See https://svn.boost.org/trac/boost/ticket/10924 for an example of why this may go wrong:
    BOOST_ASSERT((boost::math::isfinite)(f));
 
@@ -2262,7 +2262,7 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
       f = ldexp(f, shift);
       BOOST_ASSERT((boost::math::isfinite)(f));
       term = floor(f);
-      e -= shift;
+      ex -= shift;
       *this *= pow2(shift);
       if(term > 0)
          add_unsigned_long_long(static_cast<unsigned>(term));
@@ -2271,8 +2271,8 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
       f -= term;
    }
 
-   if(e != 0)
-      *this *= pow2(e);
+   if(ex != 0)
+      *this *= pow2(ex);
 
    return *this;
 }

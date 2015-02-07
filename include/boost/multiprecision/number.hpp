@@ -31,8 +31,9 @@ namespace boost{ namespace multiprecision{
 #ifdef BOOST_MSVC
 // warning C4127: conditional expression is constant
 // warning C4714: function marked as __forceinline not inlined
+// warning C4503: decorated name length exceeded, name was truncated
 #pragma warning(push)
-#pragma warning(disable:4127 4714 6326)
+#pragma warning(disable:4127 4714 4503 6326)
 #endif
 
 template <class Backend, expression_template_option ExpressionTemplates>
@@ -42,7 +43,7 @@ class number
 public:
    typedef Backend backend_type;
    BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number() BOOST_MP_NOEXCEPT_IF(noexcept(Backend())) {}
-   BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number& e) BOOST_MP_NOEXCEPT_IF(noexcept(Backend(std::declval<Backend const&>()))) : m_backend(e.m_backend){}
+   BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number& ee) BOOST_MP_NOEXCEPT_IF(noexcept(Backend(std::declval<Backend const&>()))) : m_backend(ee.m_backend){}
    template <class V>
    BOOST_MP_FORCEINLINE number(const V& v, typename boost::enable_if_c<
             (boost::is_arithmetic<V>::value || is_same<std::string, V>::value || is_convertible<V, const char*>::value)
@@ -149,10 +150,10 @@ public:
       return *this;
    }
 
-   BOOST_MP_FORCEINLINE number& operator=(const number& e)
+   BOOST_MP_FORCEINLINE number& operator=(const number& ee)
       BOOST_MP_NOEXCEPT_IF(noexcept(std::declval<Backend&>() = std::declval<Backend const&>()))
    {
-      m_backend = e.m_backend;
+      m_backend = ee.m_backend;
       return *this;
    }
 
@@ -399,7 +400,8 @@ public:
    {
       BOOST_STATIC_ASSERT_MSG(number_category<Backend>::value == number_kind_integer, "The left-shift operation is only valid for integer types");
       detail::check_shift_range(val, mpl::bool_<(sizeof(V) > sizeof(std::size_t))>(), is_signed<V>());
-      eval_left_shift(m_backend, static_cast<std::size_t>(canonical_value(val)));
+      typedef typename mpl::front<typename Backend::unsigned_types>::type ui_type;	  
+      eval_left_shift(m_backend, static_cast<ui_type>(canonical_value(val)));
       return *this;
    }
 
@@ -408,7 +410,8 @@ public:
    {
       BOOST_STATIC_ASSERT_MSG(number_category<Backend>::value == number_kind_integer, "The right-shift operation is only valid for integer types");
       detail::check_shift_range(val, mpl::bool_<(sizeof(V) > sizeof(std::size_t))>(), is_signed<V>());
-      eval_right_shift(m_backend, static_cast<std::size_t>(canonical_value(val)));
+      typedef typename mpl::front<typename Backend::unsigned_types>::type ui_type;	  
+      eval_right_shift(m_backend, static_cast<ui_type>(canonical_value(val)));
       return *this;
    }
 
