@@ -43,7 +43,7 @@ class number
 public:
    typedef Backend backend_type;
    BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number() BOOST_MP_NOEXCEPT_IF(noexcept(Backend())) {}
-   BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number& ee) BOOST_MP_NOEXCEPT_IF(noexcept(Backend(std::declval<Backend const&>()))) : m_backend(ee.m_backend){}
+   BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number& e) BOOST_MP_NOEXCEPT_IF(noexcept(Backend(std::declval<Backend const&>()))) : m_backend(e.m_backend){}
    template <class V>
    BOOST_MP_FORCEINLINE number(const V& v, typename boost::enable_if_c<
             (boost::is_arithmetic<V>::value || is_same<std::string, V>::value || is_convertible<V, const char*>::value)
@@ -150,10 +150,10 @@ public:
       return *this;
    }
 
-   BOOST_MP_FORCEINLINE number& operator=(const number& ee)
+   BOOST_MP_FORCEINLINE number& operator=(const number& e)
       BOOST_MP_NOEXCEPT_IF(noexcept(std::declval<Backend&>() = std::declval<Backend const&>()))
    {
-      m_backend = ee.m_backend;
+      m_backend = e.m_backend;
       return *this;
    }
 
